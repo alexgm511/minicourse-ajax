@@ -35,8 +35,8 @@ function loadData() {
 	  $.each( data, function( key, val ) {
 		items.push( "<li id='" + key + "'>" + val + "</li>" );
 	  });
-	 
-	  $nytElem.html(items);
+	  
+	  $nytElem.html(items.join( "" ));
 	  /*$( "<ul/>", {
 		"class": "my-new-list",
 		html: items.join( "" )
