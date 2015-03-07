@@ -29,18 +29,14 @@ function loadData() {
 	var myNYTKey = "cac618e7253335e989678d8acb017ca9:15:71525051";
 	var myNYTAPI = "http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=";
 	var myParams = encodeURI('glocations:("'+city+'")&sort=newest');
-	//"[q=search term&fq=filter-field:(filter-term)&additional-params=values]&api-key=####"
-	$.getJSON( myNYTAPI+myParams+'&api-key'+myNYTKey, function( data ) {
-	  var items = [];
-	  $.each( data, function( key, val ) {
-		items.push( "<li id='" + key + "'>" + val + "</li>" );
-	  });
-	  
-	  $nytElem.html(items.join( "" ));
-	  /*$( "<ul/>", {
-		"class": "my-new-list",
-		html: items.join( "" )
-	  }).appendTo( "body" );*/
+	$.getJSON( myNYTAPI+myParams+'&api-key='+myNYTKey, function( data ) {
+		// from http://developer.nytimes.com/io-docs shows response object
+	  var articles = data.response.docs;
+	  for (i = 0; i < articles.length; i++) {
+		  $nytElem.append('<li class="article">'+
+		  '<a href="'+articles[i].web_url+'">'+articles[i].headline.main+'</a>'+
+		  '<p>'+articles[i].snippet+'</p></li>');
+	  }
 	});
 	
     return false;
